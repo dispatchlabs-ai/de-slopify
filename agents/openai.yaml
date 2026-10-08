@@ -1,0 +1,4 @@
+interface:
+  display_name: "De-slopify Code"
+  short_description: "Simplify code without changing its behavior"
+  default_prompt: "Use $de-slopify to simplify this codebase, preserve its behavior, and validate the changes."
