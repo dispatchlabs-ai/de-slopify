@@ -7,7 +7,7 @@ description: Simplify existing code or recent changes by removing unnecessary co
 
 Make the selected code easier to understand and change. Judge the code's actual maintenance cost, not whether it looks AI-generated. A successful pass can make no edits.
 
-Use the spirit of The Pragmatic Programmer, Clean Code, and the Zen of Python as decision aids. Prefer repository and language conventions over mechanical application of book advice. For source provenance or a disputed tradeoff, consult [references/principles.md](references/principles.md); routine use does not require browsing or rereading the sources.
+Use the spirit of The Pragmatic Programmer, Clean Code, and the Zen of Python as decision aids. Prefer repository and language conventions over mechanical application of book advice. For source provenance, consult [references/principles.md](references/principles.md); routine use does not require browsing or rereading the sources. When a candidate touches dependencies, contracts, resource ownership, configuration, concurrency, or algorithms, read the relevant section of [references/structural-refactoring.md](references/structural-refactoring.md).
 
 ## Establish the target
 
@@ -27,26 +27,30 @@ Record the initial working-tree state and available checks. Trace affected calle
 
 ## Choose changes that earn their cost
 
-For each candidate, identify the concrete burden, the simpler replacement, and the behavior at risk. Discard edits justified only by taste, a slogan, a metric, or a preferred architecture.
+For each candidate, identify the concrete burden, the simpler replacement, and the behavior at risk. Test the benefit against a realistic change suggested by current requirements or callers: what would a maintainer need to understand, edit, and verify before versus after? Favor localized changes and replaceable components. Discard edits justified only by taste, a slogan, a metric, or an imagined future architecture.
 
 | Candidate | Decision rule |
 | --- | --- |
 | Forwarding layers, factories, interfaces, or generic helpers | Reuse or inline when a layer adds no useful domain meaning or boundary. Retain adapters, compatibility surfaces, framework hooks, and test seams that serve a real purpose. One implementation alone does not prove an interface is useless. |
 | Repeated logic | Consolidate when sites express the same rule and should change together. Similar syntax for independently evolving concepts can remain separate. Avoid creating a parameter-heavy universal helper. |
 | Long or deeply nested logic | Use clear conditions, guard clauses, and named concepts when they reduce the reader's mental work. Keep cohesive code together; do not scatter a readable sequence into tiny functions merely to shorten it. Preserve evaluation order and cleanup. |
-| Misleading names or comments | Use domain names and make units, state, and effects clear. Remove obsolete narration and commented-out code after checking relevance. Retain rationale, contracts, constraints, and explanations of surprising behavior. |
+| Misleading names or comments | Check names at their call sites against domain vocabulary; make units, state, and effects clear. Preserve externally bound names. Remove obsolete narration and commented-out code after checking relevance. Retain rationale, contracts, constraints, and explanations of surprising behavior. |
 | Apparently dead code or dependencies | Check callers, exports, configuration, dynamic registration, reflection, templates, and supported compatibility paths as relevant. Absence from text search alone is not proof of non-use. |
 | Repeated state or derived values | Prefer one owner of a fact. Keep deliberate caches or denormalization when justified, with their consistency rules intact. Preserve measured optimizations. |
 | Defensive checks, catches, defaults, and fallbacks | Verify the input and error contracts before removing anything. Preserve boundary validation and intentional recovery. A swallowed failure or misleading success value may be a bug; do not change that behavior under a cleanup-only request. |
-| Excess machinery in tests | Retain tests of observable contracts. Simplify redundant setup or mocks only when doing so improves clarity without losing meaningful cases. |
+| Excess machinery in tests | Retain tests of observable contracts and independent expected results. Difficult setup can reveal hidden dependencies; investigate those without automatically adding test-only abstractions. Simplify redundant setup or mocks without losing meaningful cases. |
 
 Prefer an existing idiom or direct implementation before adding a dependency, abstraction, or configuration option. Count the total understanding cost across callers and helpers, not just lines removed from one function.
+
+For structural edits, locate invariant enforcement, state ownership, and required ordering. A thin layer may isolate vendor knowledge, protect an atomic operation, or balance resource lifetimes. Prefer explicit local data flow when it removes hidden coordination without moving those guarantees. Trace an odd workaround to its rationale or runtime contract before deleting it; passing examples alone do not prove the underlying assumption.
 
 ## Apply and verify
 
 Implement useful changes in coherent, reviewable batches. Preserve outputs, API shapes, persisted data, ordering, side effects, error behavior, resource lifetimes, and relevant performance or concurrency guarantees. An apparently tiny bug fix is still a behavior change: include it only if the user's scope already authorizes it, identify it separately, and verify it as a fix. Otherwise report the concrete issue as deferred and continue safe cleanup.
 
-Run the repository's required checks and relevant existing tests for the affected paths. Where behavior is poorly captured and the refactor has real uncertainty, add a focused characterization or contract test before changing it. Do not add tests that merely mirror trivial implementation details. Check applicable boundary and failure cases; record baseline failures so pre-existing problems are not attributed to the cleanup.
+Run the repository's required checks and relevant existing tests for the affected paths. Where behavior is poorly captured and the refactor has real uncertainty, add a focused characterization or contract test before changing it. Use relevant invariants or state combinations when examples alone leave a material gap, and retain discovered counterexamples as reproducible cases. Do not add tests that merely mirror trivial implementation details. Check applicable boundary and failure cases; record baseline failures so pre-existing problems are not attributed to the cleanup.
+
+When a candidate changes loops, queries, caching, or materialization, compare runtime and memory growth at expected input sizes. Measure representative cases when the tradeoff matters; a shorter expression is not evidence of acceptable cost.
 
 If execution is unavailable, inspect the diff and contracts, state the validation gap, and limit changes to what that evidence supports. Defer an uncertain transformation rather than weakening checks or claiming equivalence without evidence.
 

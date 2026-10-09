@@ -1,14 +1,16 @@
 # Sources and interpretation
 
-Consult this reference when explaining the skill's foundations or resolving a disputed cleanup choice. The operational workflow in SKILL.md is a synthesis, not a claim that any one source prescribes it. Research was performed on 2026-10-08 using public primary material; neither complete commercial book was read.
+Consult this reference when explaining the skill's foundations or resolving a disputed cleanup choice. The operational workflow in SKILL.md is a synthesis, not a claim that any one source prescribes it. Initial public-source research on 2026-10-08 was expanded on 2026-10-09 using the supplied full text of The Pragmatic Programmer. Clean Code coverage remains limited to the public material listed below.
 
 ## The Pragmatic Programmer
 
-Material consulted: the publisher's [100 tips from the 20th Anniversary Edition](https://store.pragprog.com/tips/) and its complete [public DRY chapter extract](https://media.pragprog.com/titles/tpp20/dry.pdf).
+Material consulted: Dave Thomas and Andy Hunt, The Pragmatic Programmer: Your Journey to Mastery, 20th Anniversary Edition, supplied EPUB version P3.0 (January 22, 2020). The review covered the text of all 53 numbered topics, introductions, postface, and appendices. Embedded illustrations and equations were not systematically rendered; the guidance here relies on the prose. Public reference links remain the publisher's [100 tips](https://store.pragprog.com/tips/) and [DRY chapter extract](https://media.pragprog.com/titles/tpp20/dry.pdf).
 
 The tips connect maintainability with ease of change, limited coupling, accurate domain language, feedback, and incremental work. The DRY extract distinguishes repeated knowledge from code that happens to look alike: independent concepts need not share a function. It also allows deliberate cached representations when their consistency is encapsulated.
 
 Application: ask whether two sites should evolve together before merging them. Prefer a simpler change path over an impressive abstraction. Do not erase useful caching or force unrelated responsibilities into a common helper.
+
+The full-text review also informs the conditional checks in [structural-refactoring.md](structural-refactoring.md): dependency containment, cross-artifact knowledge, contracts and ownership, explicit data flow, temporal guarantees, causal evidence, scaling, and invariant-based tests. Each section identifies its source topics. These are original cleanup decision rules, not book excerpts. The EPUB and extracted book text are not part of the skill or its public repository.
 
 ## Clean Code
 
