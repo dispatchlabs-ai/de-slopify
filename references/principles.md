@@ -6,7 +6,7 @@ Consult this reference when explaining the skill's foundations or resolving a di
 
 Material consulted: Dave Thomas and Andy Hunt, *The Pragmatic Programmer: Your Journey to Mastery*, 20th Anniversary Edition, supplied EPUB version P3.0 (January 22, 2020). The full-text review covered all 53 numbered topics, introductions, postface, and appendices.
 
-Application: judge design by how easily a real change can be made. Limit coupling, keep domain knowledge with a clear owner, preserve useful feedback, and work incrementally. Ask whether two sites should evolve together before merging them: similar syntax need not mean duplicated knowledge. Deliberate caching can be appropriate when consistency remains controlled.
+Application: use **ETC (Easier to Change, Topic 8)** to judge how easily a real change can be made across the affected code. Treat it as a decision aid, not a reason to build for speculative requirements. Apply **DRY (Don't Repeat Yourself, Topic 9)** to duplicated knowledge: ask whether representations should evolve together, regardless of whether their code looks alike. Keep domain knowledge with a clear owner, limit coupling, preserve useful feedback, and work incrementally. Deliberate caching can be appropriate when consistency remains controlled.
 
 The review informs the dependency, configuration, contract, ownership, temporal, scaling, and evidence checks in [structural-refactoring.md](structural-refactoring.md). Topic identifiers there locate the source discussions.
 

@@ -27,12 +27,12 @@ Record the initial working-tree state and available checks. Trace affected calle
 
 ## Choose changes that earn their cost
 
-For each candidate, identify the concrete burden, the simpler replacement, and the behavior at risk. Test the benefit against a realistic change suggested by current requirements or callers: what would a maintainer need to understand, edit, and verify before versus after? Favor localized changes and replaceable components. Discard edits justified only by taste, a slogan, a metric, or an imagined future architecture.
+For each candidate, identify the concrete burden, the simpler replacement, and the behavior at risk. Apply **ETC (Easier to Change)** as a decision aid: for a realistic change suggested by current requirements or callers, compare what a maintainer would need to understand, edit, and verify across the affected code before versus after. Favor localized changes and replaceable components. Discard edits justified only by taste, a slogan, a metric, or an imagined future architecture.
 
 | Candidate | Decision rule |
 | --- | --- |
 | Forwarding layers, factories, interfaces, or generic helpers | Reuse or inline when a layer adds no useful domain meaning or boundary. Retain adapters, compatibility surfaces, framework hooks, and test seams that serve a real purpose. One implementation alone does not prove an interface is useless. |
-| Repeated logic | Consolidate when sites express the same rule and should change together. Similar syntax for independently evolving concepts can remain separate. Avoid creating a parameter-heavy universal helper. |
+| Duplicated knowledge (DRY) | Consolidate when sites represent the same knowledge and should change together, even if their code looks different. Similar syntax for independently evolving concepts can remain separate. Avoid creating a parameter-heavy universal helper. |
 | Long or deeply nested logic | Use clear conditions, guard clauses, and named concepts when they reduce the reader's mental work. Keep cohesive code together; do not scatter a readable sequence into tiny functions merely to shorten it. Preserve evaluation order and cleanup. |
 | Mode flags, output parameters, or query-shaped commands | Inspect actual call sites for hidden choices and effects. Prefer meaningful names or explicit local data flow when they clarify the operation. Preserve public signatures and mutation contracts; do not hide inputs in fields just to reduce argument counts. |
 | Misleading names or comments | Check names at their call sites against domain vocabulary; make units, state, and effects clear. Preserve externally bound names. Remove obsolete narration and commented-out code after checking relevance. Retain rationale, contracts, constraints, and explanations of surprising behavior. |
