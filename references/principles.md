@@ -1,34 +1,38 @@
 # Sources and interpretation
 
-Consult this reference when explaining the skill's foundations or resolving a disputed cleanup choice. The operational workflow in SKILL.md is a synthesis, not a claim that any one source prescribes it. Initial public-source research on 2026-10-08 was expanded on 2026-10-09 using the supplied full text of The Pragmatic Programmer. Clean Code coverage remains limited to the public material listed below.
+Consult this reference when explaining the skill's foundations or resolving a disputed cleanup choice. The full texts of both **The Pragmatic Programmer** and **Clean Code** were available and referenced in developing this skill. The full text of **The Clean Coder**, included in the supplied Clean Code Collection, was also reviewed. The source review was completed on 2026-10-09. The operational workflow is an original synthesis, not a claim that any one book prescribes it.
 
 ## The Pragmatic Programmer
 
-Material consulted: Dave Thomas and Andy Hunt, The Pragmatic Programmer: Your Journey to Mastery, 20th Anniversary Edition, supplied EPUB version P3.0 (January 22, 2020). The review covered the text of all 53 numbered topics, introductions, postface, and appendices. Embedded illustrations and equations were not systematically rendered; the guidance here relies on the prose. Public reference links remain the publisher's [100 tips](https://store.pragprog.com/tips/) and [DRY chapter extract](https://media.pragprog.com/titles/tpp20/dry.pdf).
+Material consulted: Dave Thomas and Andy Hunt, *The Pragmatic Programmer: Your Journey to Mastery*, 20th Anniversary Edition, supplied EPUB version P3.0 (January 22, 2020). The full-text review covered all 53 numbered topics, introductions, postface, and appendices.
 
-The tips connect maintainability with ease of change, limited coupling, accurate domain language, feedback, and incremental work. The DRY extract distinguishes repeated knowledge from code that happens to look alike: independent concepts need not share a function. It also allows deliberate cached representations when their consistency is encapsulated.
+Application: judge design by how easily a real change can be made. Limit coupling, keep domain knowledge with a clear owner, preserve useful feedback, and work incrementally. Ask whether two sites should evolve together before merging them: similar syntax need not mean duplicated knowledge. Deliberate caching can be appropriate when consistency remains controlled.
 
-Application: ask whether two sites should evolve together before merging them. Prefer a simpler change path over an impressive abstraction. Do not erase useful caching or force unrelated responsibilities into a common helper.
-
-The full-text review also informs the conditional checks in [structural-refactoring.md](structural-refactoring.md): dependency containment, cross-artifact knowledge, contracts and ownership, explicit data flow, temporal guarantees, causal evidence, scaling, and invariant-based tests. Each section identifies its source topics. These are original cleanup decision rules, not book excerpts. The EPUB and extracted book text are not part of the skill or its public repository.
+The review informs the dependency, configuration, contract, ownership, temporal, scaling, and evidence checks in [structural-refactoring.md](structural-refactoring.md). Topic identifiers there locate the source discussions.
 
 ## Clean Code
 
-Material consulted: the contents and relevant chapter-one passages in the [first-edition publisher sample](https://www.informit.com/content/images/9780132350884/samplepages/9780132350884.pdf), plus public passages from the second edition's [First Principles excerpt](https://www.informit.com/articles/article.aspx?p=3222335). The first edition acknowledges other valid design approaches; the later excerpt explicitly treats its principles as contextual guidance.
+Material consulted: Robert C. Martin and contributors, *Clean Code: A Handbook of Agile Software Craftsmanship*, first edition, ISBN 9780132350884, in *The Robert C. Martin Clean Code Collection*. The full-text review covered all 17 chapters, the successive-refinement, JUnit, and SerialDate case studies, the concurrency appendix, and textual front and back matter.
 
-Application: improve names, cohesion, and readability incrementally. Extract a meaningful concept when it helps the reader; impose neither a function-length quota nor a Java-style architecture on every language.
+Application: make names, calls, responsibilities, and tests communicate their purpose. Inspect hidden effects, mode flags, output mutation, and implicit semantic dependencies. Choose data-oriented or object-oriented structure according to actual change needs. Preserve useful boundary adapters, absence and error distinctions, and clear test scenarios.
 
-Additional author material supplies important counterweights:
+The case studies support small, verified iterations and reconsidering an extraction that makes the whole harder to understand. They also mix refactoring with behavior changes; parsing, error, API, and serialization changes still need authorization from the user's task. Function length, argument count, switch statements, comments, and assertion counts are signals to inspect, not automatic violations. Historical Java tooling and architectural examples are not requirements for other languages or current projects.
 
-- [Avoid Redundant Comments](https://www.informit.com/articles/article.aspx?p=1327761): comments that repeat visible code create noise. Remove repetition while keeping useful behavioral explanation.
-- [Necessary Comments](https://blog.cleancoder.com/uncle-bob/2017/02/23/NecessaryComments.html): rationale and a timing diagram can carry information names cannot express. Preserve explanations of subtle ordering or concurrency.
-- [Pattern Pushers](https://blog.cleancoder.com/uncle-bob/2015/07/05/PatternPushers.html): familiarity with patterns is not a reason to impose them. Require an actual problem before adding structural machinery.
+## The Clean Coder
+
+Material consulted: Robert C. Martin, *The Clean Coder: A Code of Conduct for Professional Programmers*, ISBN 9780137081073, in the same collection. The full-text review covered all 14 chapters, the tooling appendix, and textual front and back matter.
+
+Application: define what completion means for the requested work, retain proportionate verification under pressure, and report uncertainty honestly. Preserve test independence and distinguish unit, component, integration, and acceptance evidence when simplifying tests. The skill does not adopt the book's career expectations, scheduling practices, universal TDD prescriptions, or coverage targets as cleanup requirements.
 
 ## The Zen of Python
 
-Material consulted: [PEP 20 in full](https://peps.python.org/pep-0020/#the-zen-of-python). It values explicitness, readability, understandable structure, deliberate error handling, and practical judgment. Its advice about ambiguity discourages guessing; its simplicity principles do not eliminate necessary domain complexity.
+Material consulted: [PEP 20 in full](https://peps.python.org/pep-0020/#the-zen-of-python). It values explicitness, readability, understandable structure, deliberate error handling, and practical judgment. Its simplicity principles do not eliminate necessary domain complexity.
 
 Application: favor direct control flow and clear contracts, resist dense tricks and hidden effects, and investigate uncertain semantics. These ideas transfer across languages; Python syntax and conventions do not automatically transfer with them. Making an error visible can alter behavior, so diagnose hidden failures separately when only refactoring is authorized.
+
+## Coverage and source handling
+
+The book reviews used complete supplied EPUBs. Embedded image-only listings, illustrations, and equations were not systematically inspected; this guidance relies on the full prose and text-rendered examples. The EPUBs, extracted text, and copied book listings are not part of this skill or its public repository. Routine use requires neither the books nor an external service.
 
 ## Workflow provenance
 
